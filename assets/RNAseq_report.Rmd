@@ -2274,7 +2274,7 @@ for (file in contrast_files){
                         write.table(mat, file=paste0("pathway_analysis", "/",fname, "/", "pathway_heatmaps", "/", "Heatmap_normalized_counts_", pathway$source, "_", make.names(pathway$term_id), ".tsv"), sep="\t", quote=F, row.names=F)
 
                         # Reformat matrix so that it can be used by pheatmap (throws error if String columns/IDs are in the table)
-                        rownames(mat) <- mat$gene_name
+                        rownames(mat) <- paste(mat$Ensembl_ID,mat$gene_name,sep = "--")
                         mat$gene_name <- NULL
                         mat$Ensembl_ID <- NULL
                         mat <- data.matrix(mat)
