@@ -2382,7 +2382,7 @@ if (isProvided(params$path_genelist)){
     if (nrow(mat)>1){
 
         # Reformat matrix so that it can be used by pheatmap (throws error if String columns/IDs are in the table)
-        rownames(mat) <- mat$gene_name
+        rownames(mat) <- paste(mat$Ensembl_ID,mat$gene_name,sep = "--")
         mat$gene_name <- NULL
         mat$Ensembl_ID <- NULL
         mat <- data.matrix(mat)
