@@ -644,7 +644,6 @@ if (params$input_type %in% c("featurecounts", "smrnaseq")) {
         #condition_names <- grep("condition|batch", condition_names, value=T)
         # to account for more complex,e.g. nested and or full interaction term design
         if(grepl("*|:",design[1])) {
-          
           condition_names <- unlist(strsplit(design[,1], split = "[ :]"))
           condition_names <- grep("condition|batch", condition_names, value=T)
           condition_names <- unique(condition_names)
@@ -702,8 +701,21 @@ if (params$input_type %in% c("featurecounts", "smrnaseq")) {
 
         # Run cds with tximport depending on whether rsem or salmon was used
         #Extract condition columns and other info for tximeta
-        condition_names <- unlist(strsplit(design[,1], split = " "))
-        condition_names <- grep("condition|batch", condition_names, value=T)
+        
+        #condition_names <- unlist(strsplit(design[,1], split = " "))
+        #condition_names <- grep("condition|batch", condition_names, value=T)
+        # to account for more complex,e.g. nested and or full interaction term design
+        if(grepl("*|:",design[1])) {
+          condition_names <- unlist(strsplit(design[,1], split = "[ :]"))
+          condition_names <- grep("condition|batch", condition_names, value=T)
+          condition_names <- unique(condition_names)
+          return(condition_names)
+        }else{
+          condition_names <- unlist(strsplit(design[,1], split = " "))
+          condition_names <- grep("condition|batch", condition_names, value=T)
+          return(condition_names)
+        }
+        ##
         sampleconditions <- data.frame(metadata[,condition_names])
         colnames(sampleconditions) <- condition_names
         coldata <- data.frame(files = files, names= qbicCodes, sampleconditions)
