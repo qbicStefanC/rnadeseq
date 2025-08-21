@@ -651,6 +651,7 @@ if (params$input_type %in% c("featurecounts", "smrnaseq")) {
           condition_names <- unlist(strsplit(design[,1], split = " "))
           condition_names <- grep("condition|batch", condition_names, value=T)
         }
+        print(condition_names)
         ##
         sampleconditions <- data.frame(metadata[,condition_names])
         colnames(sampleconditions) <- condition_names
@@ -711,6 +712,7 @@ if (params$input_type %in% c("featurecounts", "smrnaseq")) {
           condition_names <- unlist(strsplit(design[,1], split = " "))
           condition_names <- grep("condition|batch", condition_names, value=T)
         }
+        print(condition_names)
         ##
         sampleconditions <- data.frame(metadata[,condition_names])
         colnames(sampleconditions) <- condition_names
